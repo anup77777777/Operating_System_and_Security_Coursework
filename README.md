@@ -44,14 +44,14 @@ Operating_System_and_Security_Coursework/
 ├── Task1_Process_Management/
 │   ├── task1.c
 │   ├── README.md
-│   ├── Documentation.pdf
-│   └── screenshots/
+│   
+│   
 │
 ├── Task2_Memory_Management/
 │   ├── task2.c
 │   ├── README.md
-│   ├── Documentation.pdf
-│   └── screenshots/
+│   
+│   
 │
 ├── Task3_File_System_and_Security/
 │
