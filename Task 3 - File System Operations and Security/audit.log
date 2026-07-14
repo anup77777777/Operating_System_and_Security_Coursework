@@ -1,0 +1,276 @@
+[2026-07-13 09:49:41] user=system     action=INIT             target=admin                result=SUCCESS
+[2026-07-13 09:49:57] user=           action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 09:50:17] user=Anup       action=REGISTER         target=Anup                 result=SUCCESS
+[2026-07-13 09:50:27] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 09:51:28] user=Anup       action=CREATE           target=Collage Assignment   result=FAIL-badname
+[2026-07-13 09:51:52] user=Anup       action=CREATE           target=Assignment           result=SUCCESS
+[2026-07-13 09:52:09] user=Anup       action=READ             target=Assignment           result=SUCCESS
+[2026-07-13 09:53:35] user=Anup       action=WRITE            target=Assignment           result=SUCCESS
+[2026-07-13 09:53:48] user=Anup       action=READ             target=Assigsnemt           result=FAIL-notfound
+[2026-07-13 09:54:17] user=Anup       action=ENCRYPT          target=Assignment           result=SUCCESS
+[2026-07-13 09:54:31] user=Anup       action=READ             target=Assignment           result=SUCCESS
+[2026-07-13 09:54:57] user=Anup       action=CHMOD            target=Assignment           result=SUCCESS
+[2026-07-13 09:55:18] user=Anup       action=APPEND           target=Assignment           result=FAIL-denied
+[2026-07-13 09:55:41] user=Anup       action=APPEND           target=Assignment           result=FAIL-denied
+[2026-07-13 09:56:16] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 09:56:42] user=Anupama    action=REGISTER         target=Anupama              result=SUCCESS
+[2026-07-13 09:56:54] user=Anupama    action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 09:57:33] user=Anupama    action=CHMOD            target=Assignment           result=FAIL-denied
+[2026-07-13 09:58:00] user=Anupama    action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 09:58:15] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 09:58:52] user=Anup       action=READ             target=Assignment           result=FAIL-denied
+[2026-07-13 09:59:24] user=Anup       action=APPEND           target=Assignment           result=FAIL-denied
+[2026-07-13 09:59:44] user=Anup       action=DECRYPT          target=Assignment           result=FAIL-denied
+[2026-07-13 10:00:17] user=Anup       action=DECRYPT          target=Assignment           result=FAIL-denied
+[2026-07-13 10:00:19] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:00:35] user=Anupama    action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:00:58] user=Anupama    action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:05:06] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:05:36] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:05:45] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:06:08] user=Anup       action=CHMOD            target=Assignment           result=SUCCESS
+[2026-07-13 10:06:26] user=Anup       action=READ             target=Assignment           result=FAIL-denied
+[2026-07-13 10:06:53] user=Anup       action=DECRYPT          target=Assignment           result=FAIL-denied
+[2026-07-13 10:07:14] user=Anup       action=DELETE           target=Assignemnt           result=FAIL-notfound
+[2026-07-13 10:07:25] user=Anup       action=DELETE           target=Assignment           result=SUCCESS
+[2026-07-13 10:07:35] user=Anup       action=READ             target=Assignment           result=FAIL-notfound
+[2026-07-13 10:07:50] user=Anup       action=WRITE            target=Anup                 result=FAIL-notfound
+[2026-07-13 10:08:04] user=Anup       action=CREATE           target=Anup                 result=SUCCESS
+[2026-07-13 10:08:37] user=Anup       action=READ             target=Anup                 result=FAIL-denied
+[2026-07-13 10:08:44] user=Anup       action=WRITE            target=Admin                result=FAIL-notfound
+[2026-07-13 10:09:01] user=Anup       action=WRITE            target=anup                 result=FAIL-notfound
+[2026-07-13 10:09:14] user=Anup       action=CHMOD            target=Anup                 result=SUCCESS
+[2026-07-13 10:09:47] user=Anup       action=WRITE            target=Anup                 result=FAIL-denied
+[2026-07-13 10:09:56] user=Anup       action=WRITE            target=Anup                 result=FAIL-denied
+[2026-07-13 10:10:01] user=Anup       action=WRITE            target=111                  result=FAIL-notfound
+[2026-07-13 10:10:18] user=Anup       action=CREATE           target=Anupama              result=SUCCESS
+[2026-07-13 10:10:48] user=Anup       action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:11:20] user=Anup       action=WRITE            target=Anupama              result=SUCCESS
+[2026-07-13 10:11:30] user=Anup       action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:11:50] user=Anup       action=APPEND           target=Anupama              result=SUCCESS
+[2026-07-13 10:12:09] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:12:19] user=Anupama    action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:12:37] user=Anupama    action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:12:53] user=Anupama    action=CHMOD            target=Anupama              result=FAIL-denied
+[2026-07-13 10:13:01] user=Anupama    action=WRITE            target=Anupama              result=FAIL-denied
+[2026-07-13 10:13:08] user=Anupama    action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:14:33] user=Anupama    action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:14:40] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:15:45] user=Anup       action=ENCRYPT          target=Anupama              result=SUCCESS
+[2026-07-13 10:15:57] user=Anup       action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:16:13] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:16:20] user=Anupama    action=LOGIN            target=-                    result=FAIL-badpass
+[2026-07-13 10:16:30] user=Anupama    action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:16:43] user=Anupama    action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:17:07] user=Anupama    action=WRITE            target=Anupama              result=FAIL-denied
+[2026-07-13 10:17:13] user=Anupama    action=ENCRYPT          target=Anupama              result=FAIL-denied
+[2026-07-13 10:20:15] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:22:07] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:22:12] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:24:11] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:24:41] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:24:48] user=Anupama    action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:25:02] user=Anupama    action=READ             target=Anupama              result=SUCCESS
+[2026-07-13 10:25:09] user=Anupama    action=WRITE            target=Anup                 result=FAIL-denied
+[2026-07-13 10:25:19] user=Anupama    action=WRITE            target=Anup                 result=FAIL-denied
+[2026-07-13 10:25:30] user=Anupama    action=DELETE           target=Anupama              result=FAIL-denied
+[2026-07-13 10:25:34] user=Anupama    action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:25:42] user=Anup       action=LOGIN            target=-                    result=FAIL-badpass
+[2026-07-13 10:25:50] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:25:58] user=Anup       action=DELETE           target=Anup                 result=SUCCESS
+[2026-07-13 10:26:09] user=Anup       action=DELETE           target=Aupama               result=FAIL-notfound
+[2026-07-13 10:26:18] user=Anup       action=DELETE           target=Anupama              result=SUCCESS
+[2026-07-13 10:28:54] user=Anup       action=CREATE           target=project_notes.txt    result=SUCCESS
+[2026-07-13 10:29:20] user=Anup       action=READ             target=project_note.txt     result=FAIL-notfound
+[2026-07-13 10:29:31] user=Anup       action=READ             target=project_notes.txt    result=FAIL-denied
+[2026-07-13 10:29:45] user=Anup       action=READ             target=project_notes.txt    result=FAIL-denied
+[2026-07-13 10:29:54] user=Anup       action=WRITE            target=project_notes.txt    result=FAIL-denied
+[2026-07-13 10:30:09] user=Anup       action=CHMOD            target=project_notes.txt    result=SUCCESS
+[2026-07-13 10:30:25] user=Anup       action=CREATE           target=project_notes.txt    result=FAIL-exists
+[2026-07-13 10:30:33] user=Anup       action=READ             target=project_notes.txt    result=FAIL-denied
+[2026-07-13 10:30:48] user=Anup       action=WRITE            target=project_notes.txt    result=FAIL-denied
+[2026-07-13 10:31:07] user=Anup       action=CHANGE_PW        target=-                    result=FAIL
+[2026-07-13 10:31:20] user=Anup       action=DELETE           target=project_notes.txt    result=SUCCESS
+[2026-07-13 10:31:59] user=Anup       action=CREATE           target=Notes                result=SUCCESS
+[2026-07-13 10:32:11] user=Anup       action=READ             target=                     result=FAIL-notfound
+[2026-07-13 10:32:18] user=Anup       action=READ             target=notes                result=FAIL-notfound
+[2026-07-13 10:32:25] user=Anup       action=READ             target=Notes                result=SUCCESS
+[2026-07-13 10:33:49] user=Anup       action=WRITE            target=Notes                result=SUCCESS
+[2026-07-13 10:34:06] user=Anup       action=WRITE            target=Notes                result=SUCCESS
+[2026-07-13 10:34:55] user=Anup       action=CREATE           target=Projects             result=SUCCESS
+[2026-07-13 10:35:02] user=Anup       action=WRITE            target=                     result=FAIL-notfound
+[2026-07-13 10:35:15] user=Anup       action=READ             target=Projects             result=FAIL-denied
+[2026-07-13 10:35:37] user=Anup       action=DELETE           target=Projects             result=SUCCESS
+[2026-07-13 10:35:53] user=Anup       action=CREATE           target=Projects             result=SUCCESS
+[2026-07-13 10:36:15] user=Anup       action=WRITE            target=Projects             result=SUCCESS
+[2026-07-13 10:36:54] user=Anup       action=CREATE           target=Todo                 result=SUCCESS
+[2026-07-13 10:37:12] user=Anup       action=WRITE            target=Todo                 result=SUCCESS
+[2026-07-13 10:38:43] user=Anup       action=CREATE           target=Secret               result=SUCCESS
+[2026-07-13 10:39:04] user=Anup       action=WRITE            target=Secret               result=SUCCESS
+[2026-07-13 10:39:22] user=Anup       action=ENCRYPT          target=Secret               result=SUCCESS
+[2026-07-13 10:40:06] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:40:51] user=Nabin Dhakal action=REGISTER         target=Nabin Dhakal         result=SUCCESS
+[2026-07-13 10:41:02] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:41:16] user=Nabin Dhakal action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 10:41:34] user=Nabin Dhakal action=READ             target=Notes                result=FAIL-denied
+[2026-07-13 10:42:20] user=Nabin Dhakal action=CHMOD            target=Notes                result=FAIL-denied
+[2026-07-13 10:42:45] user=Nabin Dhakal action=READ             target=Admin                result=FAIL-notfound
+[2026-07-13 10:42:53] user=Nabin Dhakal action=READ             target=Notes                result=FAIL-denied
+[2026-07-13 10:43:34] user=Nabin Dhakal action=CREATE           target=Message              result=SUCCESS
+[2026-07-13 10:44:05] user=Nabin Dhakal action=READ             target=Message              result=SUCCESS
+[2026-07-13 10:44:09] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:44:28] user=nabin Dhakal action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 10:44:42] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:45:00] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:45:11] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:45:22] user=Nabin Dhakal action=WRITE            target=message              result=FAIL-notfound
+[2026-07-13 10:45:34] user=Nabin Dhakal action=READ             target=Message              result=SUCCESS
+[2026-07-13 10:45:37] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:46:06] user=Nabin Dhakal action=LOGIN            target=-                    result=FAIL-badpass
+[2026-07-13 10:46:17] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:46:44] user=Nabin Dhakal action=WRITE            target=Message              result=SUCCESS
+[2026-07-13 10:47:07] user=Nabin Dhakal action=READ             target=Projects             result=FAIL-denied
+[2026-07-13 10:47:25] user=Nabin Dhakal action=CHMOD            target=Projects             result=FAIL-denied
+[2026-07-13 10:47:29] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:47:45] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:47:55] user=Anup       action=WRITE            target=Message              result=FAIL-denied
+[2026-07-13 10:48:50] user=Anup       action=CHMOD            target=Todo                 result=SUCCESS
+[2026-07-13 10:49:18] user=Anup       action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 10:49:23] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:49:31] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:49:43] user=Anup       action=READ             target=                     result=FAIL-notfound
+[2026-07-13 10:49:58] user=Anup       action=READ             target=Notes                result=SUCCESS
+[2026-07-13 10:50:55] user=Anup       action=APPEND           target=Todo                 result=FAIL-denied
+[2026-07-13 10:51:33] user=Anup       action=APPEND           target=Message              result=FAIL-denied
+[2026-07-13 10:51:40] user=Anup       action=APPEND           target=Todo                 result=FAIL-denied
+[2026-07-13 10:52:08] user=Anup       action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 10:54:51] user=Anup       action=CHMOD            target=Todo                 result=SUCCESS
+[2026-07-13 10:57:22] user=Anup       action=CHMOD            target=Todo                 result=SUCCESS
+[2026-07-13 10:57:33] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:57:43] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:57:53] user=Nabin Dhakal action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 10:58:01] user=Nabin Dhakal action=WRITE            target=Todo                 result=FAIL-denied
+[2026-07-13 10:58:13] user=Nabin Dhakal action=READ             target=Notes                result=FAIL-denied
+[2026-07-13 10:58:40] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:58:48] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:59:11] user=Anup       action=CHMOD            target=Todo                 result=SUCCESS
+[2026-07-13 10:59:21] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 10:59:29] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 10:59:39] user=Nabin Dhakal action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 10:59:47] user=Nabin Dhakal action=CHMOD            target=Todo                 result=FAIL-denied
+[2026-07-13 11:00:15] user=Nabin Dhakal action=WRITE            target=Todo                 result=FAIL-denied
+[2026-07-13 11:00:22] user=Nabin Dhakal action=READ             target=Todo                 result=FAIL-denied
+[2026-07-13 11:00:27] user=Nabin Dhakal action=READ             target=Message              result=SUCCESS
+[2026-07-13 11:01:35] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:02:19] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:02:30] user=Nabin Dhakal action=READ             target=Notes                result=FAIL-denied
+[2026-07-13 11:02:40] user=Nabin Dhakal action=READ             target=Message              result=SUCCESS
+[2026-07-13 11:06:51] user=Anup Neupane action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 11:06:59] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:07:07] user=Anup       action=CHANGE_PW        target=-                    result=FAIL
+[2026-07-13 11:07:30] user=Anup       action=READ             target=Notes                result=SUCCESS
+[2026-07-13 11:08:01] user=Anup       action=APPEND           target=Todo                 result=FAIL-denied
+[2026-07-13 11:08:07] user=Anup       action=APPEND           target=\message             result=FAIL-notfound
+[2026-07-13 11:08:12] user=Anup       action=APPEND           target=Message              result=FAIL-denied
+[2026-07-13 11:09:33] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:09:49] user=Anup       action=CHMOD            target=Notes                result=SUCCESS
+[2026-07-13 11:10:19] user=Anup       action=CHMOD            target=Notes                result=SUCCESS
+[2026-07-13 11:10:49] user=Anup       action=APPEND           target=Notes                result=SUCCESS
+[2026-07-13 11:10:56] user=Anup       action=READ             target=Notes                result=SUCCESS
+[2026-07-13 11:11:27] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:11:35] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:11:42] user=Nabin Dhakal action=APPEND           target=Notes                result=FAIL-denied
+[2026-07-13 11:13:10] user=           action=REGISTER         target=                     result=FAIL-duplicate
+[2026-07-13 11:13:15] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:13:25] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:13:40] user=Nirmal     action=REGISTER         target=Nirmal               result=SUCCESS
+[2026-07-13 11:13:51] user=Nirmal     action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:14:11] user=Nirmal     action=READ             target=Message              result=SUCCESS
+[2026-07-13 11:14:22] user=Nirmal     action=APPEND           target=Message              result=FAIL-denied
+[2026-07-13 11:14:49] user=Nirmal     action=CHMOD            target=Message              result=FAIL-denied
+[2026-07-13 11:16:14] user=Nirmal     action=CREATE           target=meeting announcement result=FAIL-badname
+[2026-07-13 11:16:46] user=Nirmal     action=CREATE           target=meeting announcement[D[D[D\ result=FAIL-badname
+[2026-07-13 11:17:15] user=Nirmal     action=CREATE           target=Meeting              result=SUCCESS
+[2026-07-13 11:17:34] user=Nirmal     action=READ             target=Meeting              result=SUCCESS
+[2026-07-13 11:17:50] user=Nirmal     action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:18:06] user=Nirmal     action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:18:38] user=Nirmal     action=WRITE            target=Meeting              result=SUCCESS
+[2026-07-13 11:18:51] user=Nirmal     action=APPEND           target=Meeting              result=SUCCESS
+[2026-07-13 11:19:58] user=Nirmal     action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:20:23] user=Anuj       action=REGISTER         target=Anuj                 result=SUCCESS
+[2026-07-13 11:20:30] user=Anuj       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:21:06] user=Anuj       action=CREATE           target=Reminders            result=SUCCESS
+[2026-07-13 11:21:26] user=Anuj       action=WRITE            target=Reminders            result=SUCCESS
+[2026-07-13 11:21:46] user=Anuj       action=ENCRYPT          target=Reminders            result=SUCCESS
+[2026-07-13 11:22:04] user=Anuj       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:22:13] user=nabin Dhakal action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 11:22:20] user=Nabin Dhakal action=LOGIN            target=-                    result=FAIL-badpass
+[2026-07-13 11:22:32] user=Nabin Dhakal action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:22:41] user=Nabin Dhakal action=DELETE           target=Message              result=SUCCESS
+[2026-07-13 11:22:48] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 11:23:10] user=Nabin      action=REGISTER         target=Nabin                result=SUCCESS
+[2026-07-13 11:23:23] user=Nabin      action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 11:23:34] user=Nabin      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 11:23:43] user=Nabin      action=CREATE           target=Message              result=SUCCESS
+[2026-07-13 11:24:15] user=Nabin      action=CREATE           target=GroupMessage         result=SUCCESS
+[2026-07-13 11:24:38] user=Nabin      action=WRITE            target=GroupMessage         result=SUCCESS
+[2026-07-13 11:25:57] user=Nabin      action=DELETE           target=Message              result=SUCCESS
+[2026-07-13 11:26:55] user=Nabin      action=CREATE           target=TopSecret            result=SUCCESS
+[2026-07-13 11:27:11] user=Nabin      action=WRITE            target=Topsecret            result=FAIL-notfound
+[2026-07-13 11:27:21] user=Nabin      action=READ             target=                     result=FAIL-notfound
+[2026-07-13 11:27:37] user=Nabin      action=WRITE            target=TopSecret            result=SUCCESS
+[2026-07-13 11:29:27] user=Nabin      action=CHMOD            target=TopSecret            result=SUCCESS
+[2026-07-13 11:29:39] user=Nabin      action=ENCRYPT          target=TopSecret            result=FAIL-denied
+[2026-07-13 11:29:53] user=Nabin      action=READ             target=TopSecret            result=SUCCESS
+[2026-07-13 11:40:07] user=Nabin      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:02:03] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:02:56] user=Anup       action=CHMOD            target=Notes                result=SUCCESS
+[2026-07-13 12:03:06] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:03:26] user=Nabin      action=REGISTER         target=Nabin                result=SUCCESS
+[2026-07-13 12:03:38] user=nabin      action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 12:03:52] user=Nabin      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:04:16] user=Nabin      action=READ             target=GroupMessage         result=FAIL-denied
+[2026-07-13 12:04:44] user=Nabin      action=CHANGE_PW        target=-                    result=SUCCESS
+[2026-07-13 12:05:01] user=Nabin      action=READ             target=Notes                result=SUCCESS
+[2026-07-13 12:06:14] user=Nabin      action=CREATE           target=ProjectInfo          result=SUCCESS
+[2026-07-13 12:06:40] user=Nabin      action=WRITE            target=ProjectInfo          result=SUCCESS
+[2026-07-13 12:06:42] user=Nabin      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:06:51] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:07:13] user=Anup       action=READ             target=ProjectInfo          result=SUCCESS
+[2026-07-13 12:07:24] user=Anup       action=WRITE            target=ProjectInfo          result=FAIL-denied
+[2026-07-13 12:07:37] user=Anup       action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:07:44] user=Nabin      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:08:14] user=Nabin      action=ENCRYPT          target=ProjectInfo          result=SUCCESS
+[2026-07-13 12:08:16] user=Nabin      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:08:22] user=Nabin      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:08:36] user=Nabin      action=READ             target=ProjectInfo          result=SUCCESS
+[2026-07-13 12:08:41] user=Nabin      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:09:01] user=           action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 12:09:27] user=Ronan      action=REGISTER         target=Ronan                result=SUCCESS
+[2026-07-13 12:09:43] user=Aryan      action=REGISTER         target=Aryan                result=SUCCESS
+[2026-07-13 12:10:02] user=Manjil     action=REGISTER         target=Manjil               result=SUCCESS
+[2026-07-13 12:10:10] user=           action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 12:10:15] user=Anup       action=REGISTER         target=Anup                 result=FAIL-duplicate
+[2026-07-13 12:10:29] user=Ronan      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:11:00] user=Ronan      action=CREATE           target=CollageChats         result=SUCCESS
+[2026-07-13 12:12:15] user=Ronan      action=CREATE           target=CollageSchedule      result=SUCCESS
+[2026-07-13 12:12:33] user=Ronan      action=WRITE            target=CollageSchedule      result=SUCCESS
+[2026-07-13 12:14:11] user=Ronan      action=WRITE            target=CollageChats         result=SUCCESS
+[2026-07-13 12:14:38] user=Ronan      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:14:50] user=manjil     action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 12:15:03] user=Manjil\    action=LOGIN            target=-                    result=FAIL-nouser
+[2026-07-13 12:15:09] user=Manjil     action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:15:21] user=Manjil     action=APPEND           target=CollageChats         result=FAIL-denied
+[2026-07-13 12:15:37] user=Manjil     action=READ             target=CollageChats         result=FAIL-denied
+[2026-07-13 12:16:36] user=Manjil     action=CREATE           target=GroupChats           result=SUCCESS
+[2026-07-13 12:16:57] user=Manjil     action=WRITE            target=GroupChats           result=SUCCESS
+[2026-07-13 12:17:03] user=Manjil     action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:17:17] user=Aryan      action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:17:30] user=Aryan      action=READ             target=GroupChats           result=SUCCESS
+[2026-07-13 12:18:05] user=Aryan      action=APPEND           target=GroupChats           result=SUCCESS
+[2026-07-13 12:18:13] user=Aryan      action=READ             target=Groupchats           result=FAIL-notfound
+[2026-07-13 12:18:23] user=Aryan      action=READ             target=GroupChats           result=SUCCESS
+[2026-07-13 12:19:16] user=Aryan      action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:21:50] user=Nabin Dhakal action=LOGOUT           target=-                    result=SUCCESS
+[2026-07-13 12:29:33] user=Anup       action=LOGIN            target=-                    result=SUCCESS
+[2026-07-13 12:32:21] user=Anup       action=LOGOUT           target=-                    result=SUCCESS

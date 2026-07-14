@@ -18,11 +18,11 @@
 ## Repository Progress
 
 | Task | Coursework | Status |
-|:----:|-------------------------------|:------:|
+|:----:|--------------------------------------|:------:|
 | ✅ Task 1 | Process Management and Threading | Completed |
 | ✅ Task 2 | Memory Management Simulation | Completed |
-| ⏳ Task 3 | File System Operations and Security | Pending |
-| ⏳ Task 4 | Network Programming and IPC | Pending |
+| ✅ Task 3 | File System Operations and Security | Completed |
+| ⏳ Task 4 | Network Programming and IPC | In Progress |
 
 </div>
 
@@ -32,7 +32,7 @@
 
 This repository contains my coursework for the **ST5004CEM – Operating Systems and Security** module.
 
-The coursework demonstrates practical implementation of core operating system concepts using the **C programming language** on **Ubuntu Linux**. Each task focuses on a major operating systems topic including process management, memory management, file systems, security mechanisms, networking, and inter-process communication.
+The coursework demonstrates practical implementation of major Operating System concepts using the **C programming language** on **Ubuntu Linux**. Each task focuses on a different OS component including process management, memory management, file systems, security, networking, and inter-process communication.
 
 ---
 
@@ -44,16 +44,19 @@ Operating_System_and_Security_Coursework/
 ├── Task1_Process_Management/
 │   ├── task1.c
 │   ├── README.md
-│   
-│   
 │
 ├── Task2_Memory_Management/
 │   ├── task2.c
 │   ├── README.md
-│   
-│   
 │
-├── Task3_File_System_and_Security/
+Task 3 - File System Operations and Security/
+│
+├── task3.c          ← Source code
+├── task3            ← Compiled executable
+├── users.dat        ← Stores registered users
+├── filemeta.dat     ← Stores file metadata (owner, group, permissions, encryption)
+├── audit.log        ← Stores audit logs
+└── vault/           ← All user-created files
 │
 ├── Task4_Network_Programming_and_IPC/
 │
@@ -77,108 +80,164 @@ Operating_System_and_Security_Coursework/
 
 # Coursework Tasks
 
-## ✅ Task 1 – Process Management and Threading
+---
+
+# ✅ Task 1 – Process Management and Threading
 
 **Status:** Completed
 
-### Implemented Features
+### Features
 
 - Process creation using `fork()`
-- Parent and Child process execution
+- Parent and Child Process Execution
 - POSIX Multi-threading
-- Three concurrent worker threads
-- Round Robin Scheduler Simulation
-- Thread Synchronization using Mutexes
+- Three Concurrent Worker Threads
+- Round Robin CPU Scheduling Simulation
+- Mutex Synchronization
 - Condition Variables
+- Shared Resource Protection
 - Race Condition Prevention
 - Deadlock Prevention
-- Interactive terminal dashboard
+- Interactive Terminal Dashboard
 
 ---
 
-## ✅ Task 2 – Memory Management Simulation
+# ✅ Task 2 – Memory Management Simulation
 
 **Status:** Completed
 
-### Implemented Features
+### Features
 
 - Configurable Paging System
-- Configurable Physical Memory Frames
-- FIFO Page Replacement Algorithm
-- LRU Page Replacement Algorithm
-- Bonus: Optimal Page Replacement Algorithm
-- Manual Reference String Input
-- Random Reference String Generator
+- Configurable Physical Memory
+- FIFO Page Replacement
+- LRU Page Replacement
+- Optimal Page Replacement
+- Manual Reference String
+- Random Reference Generator
 - Built-in Demonstration Dataset
-- Page Hit Tracking
-- Page Fault Tracking
-- Hit Ratio Calculation
-- Miss Ratio Calculation
-- Frame-by-Frame Memory Visualization
+- Page Fault Counter
+- Page Hit Counter
+- Hit Ratio
+- Miss Ratio
+- Memory Frame Visualization
 - Page Eviction Tracking
-- Peak Frame Occupancy Statistics
-- Algorithm Performance Comparison
-- Interactive Terminal User Interface
+- Algorithm Comparison
+- Interactive Console UI
 
 ---
 
-## ⏳ Task 3 – File System Operations and Security
+# ✅ Task 3 – Secure File Management System
 
-**Status:** Pending
+**Status:** Completed
 
-### Planned Features
+### Features
 
-- Secure File Operations
-- File Permission Management
-- User Authentication
-- Encryption & Decryption
-- Audit Logging
-- Access Control Simulation
+### File Management
+
+- Create Files
+- Open and Read Files
+- Write Files
+- Append Files
+- Rename Files
+- Delete Files
+- File Listing
+
+### User Authentication
+
+- User Registration
+- Secure Login System
+- Salted Password Hashing
+- Password Verification
+- Password Change
+- Default Administrator Account
+- Admin User Management
+
+### Permission System
+
+- Owner Permissions
+- Group Permissions
+- Other Permissions
+- Unix-style RWX Permission Model
+- chmod-style Permission Editor
+- Access Control Enforcement
+
+### Security
+
+- XOR Stream File Encryption
+- File Decryption
+- Passphrase Protection
+- Integrity Verification
+- Checksum Validation
+
+### Logging
+
+- Audit Log Generation
+- Login Logging
+- File Operation Logging
+- Permission Change Logging
+- Encryption Activity Logging
+- User Management Logging
+
+### Additional Features
+
+- File Metadata Management
+- Input Validation
+- Filename Sanitization
+- Colored Interactive Terminal UI
 
 ---
 
-## ⏳ Task 4 – Network Programming and IPC
+# ⏳ Task 4 – Network Programming and IPC
 
-**Status:** Pending
+**Status:** In Progress
 
 ### Planned Features
 
 - Client-Server Socket Programming
+- TCP Communication
+- Multiple Client Support
 - Inter-Process Communication (IPC)
-- Multiple Client Handling
-- Secure Communication
 - Authentication
+- Secure Communication
+- Logging
 - Error Handling
-- Logging and Monitoring
 
 ---
 
 # Learning Outcomes
 
-Through this coursework, I have gained practical experience in:
+This coursework provided practical experience in:
 
+- Linux System Programming
 - Process Management
 - CPU Scheduling
-- POSIX Thread Programming
-- Thread Synchronization
+- POSIX Threads
+- Synchronization
 - Race Condition Prevention
 - Deadlock Prevention
 - Virtual Memory Management
-- Paging Techniques
-- Page Replacement Algorithms
-- Linux System Programming
-- File Systems
+- Paging Algorithms
+- File System Design
+- User Authentication
+- Access Control
+- File Encryption
+- Audit Logging
 - Network Programming
+- Socket Programming
 - Inter-Process Communication
 
 ---
 
-# Tools & Technologies
+# Technologies Used
 
 - C Programming
 - GCC Compiler
 - POSIX Threads (pthread)
 - Linux System Calls
+- File I/O
+- Unix File Permissions
+- Socket Programming
 - Ubuntu Linux
 - Git
 - GitHub
@@ -187,22 +246,26 @@ Through this coursework, I have gained practical experience in:
 
 # Current Progress
 
-- ✅ Task 1 Completed
-- ✅ Task 2 Completed
-- 🚧 Task 3 Under Development
-- 🚧 Task 4 Yet to Start
+| Task | Status |
+|------|--------|
+| ✅ Task 1 | Completed |
+| ✅ Task 2 | Completed |
+| ✅ Task 3 | Completed |
+| 🚧 Task 4 | In Progress |
 
 ---
 
 # Future Work
 
-The repository will continue to be updated as the remaining coursework tasks are completed. Future updates will include:
+The remaining coursework will include:
 
-- Source Code
-- Technical Documentation
-- Execution Screenshots
-- Reports
-- Performance Analysis
+- Complete Network Programming
+- IPC Demonstration
+- Performance Evaluation
+- Additional Documentation
+- Screenshots
+- Testing Results
+- Final Report
 
 ---
 
@@ -222,6 +285,6 @@ The repository will continue to be updated as the remaining coursework tasks are
 
 # License
 
-This repository contains coursework developed solely for academic purposes as part of the **ST5004CEM – Operating Systems and Security** module.
+This repository contains coursework developed solely for academic purposes for the **ST5004CEM – Operating Systems and Security** module.
 
 © 2026 Anup Neupane. All Rights Reserved.
