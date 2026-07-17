@@ -3,11 +3,23 @@
    ────────────────────────────────────────────────────────────────────────
    ST5004CEM · Task 2 — Memory Management Simulation (25 marks)
 
-   Satisfies:
-     1. Paging system with page size configurable AT RUNTIME
-     2. Two page replacement algorithms — FIFO and LRU (+ bonus: Optimal)
-     3. Page-fault tracking and hit/miss ratio calculation
-     4. Rich step-by-step visualization of memory allocation
+   ────────────────────────────────────────────────────────────────────────
+   REQUIREMENT  →  PART  →  WHERE TO LOOK IN THIS FILE
+   ────────────────────────────────────────────────────────────────────────
+   1. Paging system with configurable page size
+        → PART A   → SimConfig struct, configure_simulation(),
+                      build_reference_string()   [search "PART A"]
+
+   2. Page replacement algorithms (FIFO and LRU)
+        → PART B   → run_fifo(), run_lru()        [search "PART B"]
+
+   3. Track page faults, calculate hit/miss ratios
+        → PART C   → Stats struct, print_stats_card(),
+                      print_comparison()          [search "PART C"]
+
+   4. Visualization / detailed logging of memory allocation
+        → PART D   → print_banner(), print_table_header(), print_row(),
+                      draw_bar(), print_config_summary() [search "PART D"]
    ════════════════════════════════════════════════════════════════════════ */
 
 #include <stdio.h>
@@ -36,12 +48,17 @@
 
 /* ═══════════════════════════ DATA STRUCTURES ═══════════════════════════ */
 
+/* PART B DATA — one physical frame slot. loaded_at/last_used are the
+   timestamps the FIFO and LRU replacement algorithms compare against. */
 typedef struct {
     int page_id;     /* -1 means the frame is empty                */
     int loaded_at;   /* tick this page entered the frame (FIFO)    */
     int last_used;   /* tick of most recent access (LRU)           */
 } Frame;
 
+/* PART C DATA — Requirement 3: page-fault tracking / hit-miss counters.
+   Every algorithm run fills one of these; print_stats_card() and
+   print_comparison() turn it into the hit/miss ratio report. */
 typedef struct {
     int   hits;
     int   faults;
@@ -49,6 +66,10 @@ typedef struct {
     int   peak_occupancy;
 } Stats;
 
+/* PART A DATA — Requirement 1: the whole simulation setup, including the
+   runtime-configurable page_size (bytes per page) and frame_count
+   (number of physical frames == the size of physical/RAM address space
+   in units of pages). */
 typedef struct {
     int  page_size;
     int  frame_count;
@@ -104,8 +125,14 @@ static int occupancy(Frame *f, int n) {
     return c;
 }
 
-/* ═══════════════════════ VISUALIZATION PRIMITIVES ═══════════════════════ */
+/* ═══════════════ PART D — VISUALIZATION PRIMITIVES (Requirement 4) ═══════════════
+   Everything below renders the simulation state to the terminal: the
+   startup banner, the configuration summary, and — most importantly —
+   the live per-tick frame table (print_table_header/print_row/footer)
+   that shows exactly which page sits in which physical frame at every
+   step, plus the HIT/FAULT/eviction outcome of that step. */
 
+/* PART D — startup banner (cosmetic, part of the logging/UI layer) */
 static void print_banner(void) {
     printf(BOLD MAGENTA
     "\n╔═══════════════════════════════════════════════════════════════════╗\n"
@@ -120,6 +147,8 @@ static void print_banner(void) {
     printf(DIM ITAL "        A Virtual Memory & Page Replacement Playground\n" RESET);
 }
 
+/* PART D — logs the final configuration (page size, frames, ref string)
+   before the simulation runs */
 static void print_config_summary(SimConfig *c) {
     printf(BOLD "\n  ┌─ Simulation Configuration " RESET);
     hr("─", 40); printf("\n");
@@ -148,7 +177,7 @@ static int frame_col_width(int frame_count) {
     return (w > label_w) ? w : label_w;
 }
 
-/* draws the frame table header once per algorithm run */
+/* PART D — draws the frame table header once per algorithm run */
 static void print_table_header(const char *algo, const char *icon, int frame_count) {
     int fw = frame_col_width(frame_count);
     printf(BOLD BLUE "\n  ╭─ %s %s " RESET, icon, algo);
@@ -167,7 +196,9 @@ static void print_table_footer(int frame_count) {
     printf("┴────────────\n" RESET);
 }
 
-/* one row of the live frame visualization */
+/* PART D — one row of the live frame visualization: shows every physical
+   frame's contents at this tick, and whether this tick was a HIT or a
+   FAULT (with which page got evicted, if any) */
 static void print_row(int tick, int ref, Frame *f, int n, int fault, int evicted_id) {
     int fw = frame_col_width(n);
     int printed = 0;
@@ -199,21 +230,26 @@ static void print_row(int tick, int ref, Frame *f, int n, int fault, int evicted
     printf("\n");
 }
 
-/* ═══════════════════════════ CORE ALGORITHMS ═══════════════════════════ */
-/* Each algorithm returns Stats and prints its own live visualization.
-   All three share the same Frame representation so behaviour is easy
-   to compare and audit. */
+/* ═══════════════ PART B — PAGE REPLACEMENT ALGORITHMS (Requirement 2) ═══════════════
+   Two algorithms, both required by the brief:
+     • run_fifo() — First In, First Out: evicts whichever resident page
+       has the smallest loaded_at (i.e. was brought into a frame longest ago).
+     • run_lru()  — Least Recently Used: evicts whichever resident page
+       has the smallest last_used (i.e. was accessed longest ago).
+   Both functions share the same Frame representation and the same
+   fault/hit/eviction bookkeeping (Stats, see PART C) so their results
+   are directly comparable, and both call the PART D visualization
+   functions to print a live row for every reference-string tick. */
 
+/* PART B — FIFO replacement algorithm */
 static Stats run_fifo(SimConfig *cfg) {
     Frame f[MAX_FRAMES];
     for (int i = 0; i < cfg->frame_count; i++) f[i] = (Frame){-1, 0, 0};
     Stats s = {0, 0, 0, 0};
-
     print_table_header("FIFO — First In, First Out", "🥇", cfg->frame_count);
     for (int t = 0; t < cfg->ref_len; t++) {
         int ref = cfg->ref[t];
         int idx = find_page(f, cfg->frame_count, ref);
-
         if (idx != -1) {
             f[idx].last_used = t + 1;
             s.hits++;
@@ -242,16 +278,15 @@ static Stats run_fifo(SimConfig *cfg) {
     return s;
 }
 
+/* PART B — LRU replacement algorithm */
 static Stats run_lru(SimConfig *cfg) {
     Frame f[MAX_FRAMES];
     for (int i = 0; i < cfg->frame_count; i++) f[i] = (Frame){-1, 0, 0};
     Stats s = {0, 0, 0, 0};
-
     print_table_header("LRU — Least Recently Used", "🕒", cfg->frame_count);
     for (int t = 0; t < cfg->ref_len; t++) {
         int ref = cfg->ref[t];
         int idx = find_page(f, cfg->frame_count, ref);
-
         if (idx != -1) {
             f[idx].last_used = t + 1;
             s.hits++;
@@ -280,54 +315,14 @@ static Stats run_lru(SimConfig *cfg) {
     return s;
 }
 
-/* Bonus: Optimal (Belady's) replacement — evicts the page used farthest
-   in the future (or never again). Included as an extra reference point;
-   the assignment only requires FIFO + LRU, both fully implemented above. */
-static Stats run_optimal(SimConfig *cfg) {
-    Frame f[MAX_FRAMES];
-    for (int i = 0; i < cfg->frame_count; i++) f[i] = (Frame){-1, 0, 0};
-    Stats s = {0, 0, 0, 0};
+/* ═══════════════ PART C — FAULT TRACKING & HIT/MISS RATIOS (Requirement 3) ═══════════════
+   Turns the raw Stats counters (hits, faults, evictions, peak_occupancy)
+   collected during PART B's algorithm runs into a human-readable report:
+   print_stats_card() shows one algorithm's hit % / fault % as a bar
+   chart; print_comparison() puts FIFO and LRU side by side and picks
+   a verdict based on which had fewer faults. */
 
-    print_table_header("OPTIMAL — Belady's Min-Fault Oracle", "🔮", cfg->frame_count);
-    for (int t = 0; t < cfg->ref_len; t++) {
-        int ref = cfg->ref[t];
-        int idx = find_page(f, cfg->frame_count, ref);
-
-        if (idx != -1) {
-            f[idx].last_used = t + 1;
-            s.hits++;
-            print_row(t + 1, ref, f, cfg->frame_count, 0, -1);
-        } else {
-            s.faults++;
-            int evicted_id = -1;
-            int slot = first_empty(f, cfg->frame_count);
-            if (slot == -1) {
-                int victim = 0, farthest = -1;
-                for (int j = 0; j < cfg->frame_count; j++) {
-                    int next_use = cfg->ref_len; /* "never again" */
-                    for (int k = t + 1; k < cfg->ref_len; k++) {
-                        if (cfg->ref[k] == f[j].page_id) { next_use = k; break; }
-                    }
-                    if (next_use > farthest) { farthest = next_use; victim = j; }
-                }
-                slot = victim;
-                evicted_id = f[slot].page_id;
-                s.evictions++;
-            }
-            f[slot].page_id = ref;
-            f[slot].loaded_at = t + 1;
-            f[slot].last_used = t + 1;
-            print_row(t + 1, ref, f, cfg->frame_count, 1, evicted_id);
-        }
-        int occ = occupancy(f, cfg->frame_count);
-        if (occ > s.peak_occupancy) s.peak_occupancy = occ;
-    }
-    print_table_footer(cfg->frame_count);
-    return s;
-}
-
-/* ═══════════════════════════ RESULTS & REPORTING ═══════════════════════════ */
-
+/* PART C — renders one algorithm's hit/fault percentages as a bar chart */
 static void print_stats_card(const char *name, Stats s, int ref_len) {
     float hit_pct   = 100.0f * s.hits   / ref_len;
     float fault_pct = 100.0f * s.faults / ref_len;
@@ -338,7 +333,8 @@ static void print_stats_card(const char *name, Stats s, int ref_len) {
     printf(DIM "   Evictions: %d   Peak frame occupancy: %d\n" RESET, s.evictions, s.peak_occupancy);
 }
 
-static void print_comparison(SimConfig *cfg, Stats fifo, Stats lru, Stats opt) {
+/* PART C — FIFO vs LRU side-by-side hit/fault comparison table */
+static void print_comparison(SimConfig *cfg, Stats fifo, Stats lru) {
     printf(BOLD MAGENTA
         "\n╔═══════════════════════════════════════════════════════════════════╗\n"
         "║                    ALGORITHM SHOWDOWN                                ║\n"
@@ -349,9 +345,9 @@ static void print_comparison(SimConfig *cfg, Stats fifo, Stats lru, Stats opt) {
            "Algorithm", "Hits", "Faults", "Hit Rate", "Evictions");
     printf(DIM "  "); hr("─", 54); printf("\n" RESET);
 
-    Stats  arr[3]  = { fifo, lru, opt };
-    const char *nm[3] = { "FIFO", "LRU", "Optimal*" };
-    for (int i = 0; i < 3; i++) {
+    Stats  arr[2]  = { fifo, lru };
+    const char *nm[2] = { "FIFO", "LRU" };
+    for (int i = 0; i < 2; i++) {
         float hr_pct = 100.0f * arr[i].hits / cfg->ref_len;
         printf("  %-12s " GREEN "%8d" RESET " " RED "%8d" RESET " %9.1f%% %12d\n",
                nm[i], arr[i].hits, arr[i].faults, hr_pct, arr[i].evictions);
@@ -365,14 +361,19 @@ static void print_comparison(SimConfig *cfg, Stats fifo, Stats lru, Stats opt) {
     else
         printf(CYAN "FIFO and LRU tied at %d faults each on this workload.\n" RESET, fifo.faults);
 
-    printf(DIM "  * Optimal is a theoretical lower bound (needs future knowledge) —\n"
-               "    shown only as a benchmark; it is not a real schedulable algorithm.\n"
-               "  Note: FIFO can suffer Belady's Anomaly, where adding MORE frames\n"
+    printf(DIM "  Note: FIFO can suffer Belady's Anomaly, where adding MORE frames\n"
                "  paradoxically increases faults. LRU never exhibits this problem.\n" RESET);
 }
 
-/* ═══════════════════════════ CONFIGURATION MENU ═══════════════════════════ */
+/* ═══════════════ PART A — CONFIGURABLE PAGING SYSTEM (Requirement 1) ═══════════════
+   Everything below builds the SimConfig at runtime: page_size and
+   frame_count are both asked interactively (get_int), so the "paging
+   system" is genuinely configurable each time the program runs — not
+   hard-coded. build_reference_string() then builds the sequence of
+   page requests (manually typed, randomly generated, or a demo
+   pattern) that PART B's algorithms will replay. */
 
+/* PART A — builds the page-request sequence to be replayed by PART B */
 static void build_reference_string(SimConfig *cfg) {
     printf(BOLD "\n  How should the reference string (page request sequence) be built?\n" RESET);
     printf("   1) Type it in manually\n");
@@ -405,6 +406,9 @@ static void build_reference_string(SimConfig *cfg) {
     }
 }
 
+/* PART A — asks for page_size and frame_count AT RUNTIME (Requirement 1
+   is satisfied right here: nothing about the paging system is fixed
+   at compile time). */
 static void configure_simulation(SimConfig *cfg) {
     print_banner();
     printf(BOLD "\n  Let's set up your virtual memory system.\n" RESET);
@@ -415,26 +419,31 @@ static void configure_simulation(SimConfig *cfg) {
 }
 
 /* ═══════════════════════════ MAIN ═══════════════════════════ */
+/* Drives the whole simulation through PART A → PART D in order. */
 
 int main(void) {
     SimConfig cfg;
+
+    /* PART A — configurable paging system: ask for page size, frame
+       count, and the reference string */
     configure_simulation(&cfg);
 
     printf(BOLD "\n  Press Enter to run the simulation...\n" RESET);
     getchar();
 
+    /* PART B (algorithms) + PART D (live visualization) run together:
+       each algorithm prints its own per-tick frame table as it goes */
     Stats fifo = run_fifo(&cfg);
+    /* PART C — hit/fault tracking & ratio report for FIFO */
     print_stats_card("FIFO", fifo, cfg.ref_len);
 
     printf("\n");
     Stats lru = run_lru(&cfg);
+    /* PART C — hit/fault tracking & ratio report for LRU */
     print_stats_card("LRU", lru, cfg.ref_len);
 
-    printf("\n");
-    Stats opt = run_optimal(&cfg);
-    print_stats_card("Optimal (benchmark)", opt, cfg.ref_len);
-
-    print_comparison(&cfg, fifo, lru, opt);
+    /* PART C — final FIFO vs LRU comparison */
+    print_comparison(&cfg, fifo, lru);
 
     printf("\n" DIM "  ── end of simulation ──\n\n" RESET);
     return 0;
