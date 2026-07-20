@@ -28,6 +28,31 @@
    keyed from a user passphrase. Both exist purely to demonstrate the
    *concepts* of salted hashing and symmetric encryption inside a
    self-contained program that needs no external crypto library.
+
+   ----------------------------------------------------------------------------
+   NOTE: no logic in this file has been changed. Comment banners tagged
+   "PART A", "PART B", and "PART C" have been added throughout so a marker
+   can quickly locate the code satisfying each grouped requirement below.
+   ----------------------------------------------------------------------------
+   PART A  (search "PART A"): User login / Password verification /
+            Create file / Read file / Write & Append file / Rename & Delete file
+              -> HASHING section (password hash used for verification)
+              -> USER LOOKUP / AUTH section (create_default_admin,
+                 register_user, login, change_password)
+              -> FILE OPERATIONS section (create_file_op, open_read_file,
+                 write_file_op, append_file_op, delete_file_op, rename_file_op)
+
+   PART B  (search "PART B"): Owner/Group/Other permissions / chmod /
+            Read/Write/Execute checks / Access denied handling
+              -> PERMISSIONS section (mode_str, check_permission,
+                 parse_octal_perm, chmod_interactive, chmod_file_op)
+
+   PART C  (search "PART C"): Encrypt file / Decrypt file /
+            Audit log generation / Activity monitoring
+              -> XOR STREAM CIPHER + CHECKSUM section
+              -> ENCRYPTION / DECRYPTION section (encrypt_file_op, decrypt_file_op)
+              -> AUDIT LOGGING section (audit_log)
+              -> view_audit_log (activity monitoring, in ADMIN TOOLS)
    ============================================================================
 */
 
@@ -360,7 +385,9 @@ static void save_files(void) {
 }
 
 /* ============================================================================
-   AUDIT LOGGING
+   PART C -- AUDIT LOGGING (Requirement: Audit log generation)
+   Every security-relevant event across the whole program funnels through
+   this one function, which timestamps it and appends it to audit.log.
    ============================================================================ */
 static void audit_log(const char *actor, const char *action,
                        const char *target, const char *result) {
@@ -375,7 +402,10 @@ static void audit_log(const char *actor, const char *action,
 }
 
 /* ============================================================================
-   HASHING (salted, iterated -- for password storage, NOT for real security)
+   PART A -- PASSWORD HASHING (Requirement: Password verification)
+   Salted, iterated hash used to store passwords and to verify a login
+   attempt (login() / change_password() recompute this hash and compare
+   it against the stored passhash -- see PART A further down).
    ============================================================================ */
 static unsigned long djb2(const char *str) {
     unsigned long hash = 5381;
@@ -425,7 +455,11 @@ static void hash_password(const char *password, const char *salt, char *out_hex)
 }
 
 /* ============================================================================
-   XOR STREAM CIPHER + CHECKSUM (file encryption)
+   PART C -- XOR STREAM CIPHER + CHECKSUM (Requirement: Encrypt/Decrypt file)
+   xor_crypt() is called by encrypt_file_op()/decrypt_file_op() further
+   down to scramble/unscramble a file's bytes with a passphrase-derived
+   keystream; checksum_buf() gives those functions an integrity check so
+   a wrong passphrase is detected instead of silently producing garbage.
    ============================================================================ */
 static void xor_crypt(unsigned char *data, size_t len, const char *key) {
     size_t klen = strlen(key);
@@ -449,7 +483,12 @@ static unsigned long checksum_buf(const unsigned char *data, size_t len) {
 }
 
 /* ============================================================================
-   USER LOOKUP / AUTH
+   PART A -- USER LOOKUP / AUTHENTICATION
+   Requirement: User login / Password verification
+   find_user()/create_default_admin()/register_user() set accounts up;
+   login() and change_password() are where a submitted password is
+   re-hashed with hash_password() (see PART A above) and compared
+   against the stored hash to verify identity.
    ============================================================================ */
 static int find_user(const char *username) {
     for (int i = 0; i < user_count; i++)
@@ -494,7 +533,6 @@ static int register_user(void) {
     }
     read_line("Group name (e.g. staff, guests): ", group, MAX_UNAME);
     if (strlen(group) == 0) strncpy(group, "users", MAX_UNAME - 1);
-
     read_password("Choose a password: ", pass1, sizeof(pass1));
     read_password("Confirm password : ", pass2, sizeof(pass2));
     if (strcmp(pass1, pass2) != 0) {
@@ -530,6 +568,8 @@ static int register_user(void) {
     return 1;
 }
 
+/* PART A -- user login: reads credentials, then verifies the password
+   by recomputing hash_password() and comparing it to the stored hash */
 static int login(void) {
     action_header("LOGIN");
     char uname[MAX_UNAME], pass[128];
@@ -557,6 +597,8 @@ static int login(void) {
     return 1;
 }
 
+/* PART A -- password verification (re-checks the current password
+   before allowing it to be changed) */
 static void change_password(void) {
     char old[128], n1[128], n2[128];
     read_password("Current password: ", old, sizeof(old));
@@ -582,7 +624,12 @@ static void change_password(void) {
 }
 
 /* ============================================================================
-   PERMISSIONS
+   PART B -- PERMISSIONS
+   Requirement: Owner/Group/Other permissions / Read/Write/Execute checks
+   Every rwx bit lives in FileMeta.perm[owner|group|other][r|w|x];
+   check_permission() is the single gate every file operation below calls
+   before touching a file, which is also where "access denied" handling
+   originates.
    ============================================================================ */
 static void mode_str(FileMeta *fm, char *out) {
     const char *labels = "rwx";
@@ -593,6 +640,10 @@ static void mode_str(FileMeta *fm, char *out) {
     out[p] = '\0';
 }
 
+/* PART B -- the core Read/Write/Execute access check. Every file
+   operation (open/write/append/delete/rename/chmod/encrypt/decrypt)
+   calls this before proceeding; a 0 return is what triggers each
+   caller's "Permission denied" (access denied) branch. */
 /* action: 'r','w','x'  returns 1 if allowed, 0 otherwise */
 static int check_permission(FileMeta *fm, User *u, char action) {
     if (u->is_admin) return 1; /* admin bypasses all checks */
@@ -636,7 +687,13 @@ static void chmod_interactive(FileMeta *fm) {
 }
 
 /* ============================================================================
-   FILE OPERATIONS
+   PART A -- FILE OPERATIONS
+   Requirement: Create file / Read file / Write & Append file /
+   Rename & Delete file
+   Every function below (create_file_op, open_read_file, write_file_op,
+   append_file_op, delete_file_op, rename_file_op) is one of the
+   required file operations. Each one calls check_permission() (PART B)
+   before acting, and calls audit_log() (PART C) to record the outcome.
    ============================================================================ */
 static char *vault_path(const char *filename, char *out, size_t outsz) {
     snprintf(out, outsz, "%s/%s", VAULT_DIR, filename);
@@ -668,6 +725,7 @@ static void list_files(void) {
     pause_enter();
 }
 
+/* PART A -- Create file */
 static void create_file_op(void) {
     action_header("CREATE FILE");
     char fname[MAX_FNAME];
@@ -760,6 +818,7 @@ static unsigned char *read_raw(const char *path, size_t *outlen) {
     return buf;
 }
 
+/* PART A -- Read file */
 static void open_read_file(void) {
     action_header("OPEN / READ FILE");
     char fname[MAX_FNAME];
@@ -833,6 +892,7 @@ static unsigned char *collect_multiline(size_t *outlen) {
     return buf;
 }
 
+/* PART A -- Write file (overwrite) */
 static void write_file_op(void) {
     action_header("WRITE (OVERWRITE) FILE");
     char fname[MAX_FNAME];
@@ -881,6 +941,7 @@ static void write_file_op(void) {
     pause_enter();
 }
 
+/* PART A -- Append file */
 static void append_file_op(void) {
     action_header("APPEND TO FILE");
     char fname[MAX_FNAME];
@@ -949,6 +1010,7 @@ static void append_file_op(void) {
     pause_enter();
 }
 
+/* PART A -- Delete file */
 static void delete_file_op(void) {
     action_header("DELETE FILE");
     char fname[MAX_FNAME];
@@ -985,6 +1047,7 @@ static void delete_file_op(void) {
     pause_enter();
 }
 
+/* PART A -- Rename file */
 static void rename_file_op(void) {
     action_header("RENAME FILE");
     char fname[MAX_FNAME], newname[MAX_FNAME];
@@ -1025,6 +1088,7 @@ static void rename_file_op(void) {
 }
 
 /* ----------------------------------------------------------------------
+   PART B -- chmod (Requirement: chmod / Owner-Group-Other permissions)
    Simplified permission editor:
      - Shows the current permissions in plain English (not octal).
      - Offers common presets first (private / share with group / public).
@@ -1106,8 +1170,13 @@ static void chmod_file_op(void) {
 }
 
 /* ============================================================================
-   ENCRYPTION / DECRYPTION
+   PART C -- ENCRYPTION / DECRYPTION
+   Requirement: Encrypt file / Decrypt file
+   Both functions below wrap the xor_crypt()/checksum_buf() primitives
+   (declared earlier under PART C) around a specific file, and both log
+   the outcome through audit_log() for activity monitoring.
    ============================================================================ */
+/* PART C -- Encrypt file */
 static void encrypt_file_op(void) {
     action_header("ENCRYPT FILE");
     char fname[MAX_FNAME];
@@ -1157,6 +1226,7 @@ static void encrypt_file_op(void) {
     pause_enter();
 }
 
+/* PART C -- Decrypt file */
 static void decrypt_file_op(void) {
     action_header("DECRYPT FILE");
     char fname[MAX_FNAME];
@@ -1208,6 +1278,9 @@ static void decrypt_file_op(void) {
 /* ============================================================================
    ADMIN TOOLS
    ============================================================================ */
+/* PART C -- Activity monitoring: renders audit.log to the screen,
+   filtered to "my activity" for a standard user or the full log for
+   an admin (color-coded SUCCESS/FAIL for quick scanning) */
 static void view_audit_log(void) {
     action_header(current_user->is_admin ? "AUDIT LOG (full)" : "AUDIT LOG (your activity)");
     FILE *f = fopen(AUDIT_LOG, "r");
@@ -1403,3 +1476,4 @@ int main(void) {
     }
     return 0;
 }
+
